@@ -1,0 +1,40 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+
+<main>
+  <head><h1>Rides</h1></head>
+  <p>Matched rides based on your search criteria</p>
+  <body>    
+    <table class="table" border="1">
+      <thead>
+        <tr>
+	  <th>Owner</th>
+          <th>Destination</th>
+          <th>Arrival Time</th>
+          <th>Number of Passengers</th>
+	  <th>Number of Sharers</th>
+	  <th>Vehicle Type</th>
+	  <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ride in object_list %}
+        <tr>
+	  <td>{{ ride.username }}</td>
+          <td>{{ ride.dest_addr }}</td>
+          <td>{{ ride.arrival | date:"m/d/Y P" }}</td>
+          <td>{{ ride.num_passenger }}</td>
+	  <td>{{ ride.num_sharer }}</td>
+	  <td>{{ ride.vehicle_type }}</td>
+	  <td><a href="{% url 'sharer-join' ride.id %}">Join</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'sharer-home' %}'">Back</button><br>
+  </body>
+</main>
+{% endblock %}

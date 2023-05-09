@@ -1,0 +1,29 @@
+{% extends 'general_basic.html' %}
+
+
+{% block content %}
+  <main>
+  <h1>Ride Driver</h1>
+    {% if user.is_authenticated %}
+    <h2>Welcome back {{user.username}}!<br></h2>
+    
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-reg' %}'">Register/Update</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-unregister' %}'">Unregister</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-new-rides' %}'">New Rides</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-edit-rides' %}'">Edit Rides</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-past-rides' %}'">Past Rides</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'home' %}'">Go to Home</button><br><br>
+
+    {% else %}
+    <h2>Please log in to continue</h2>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+
+    {% else %}
+    <a href="{% url 'login' %}">Log in</a><br>
+    <a href="{% url 'register' %}">Sign up</a>
+    {% endif %}
+  </main>
+  {% endblock %}

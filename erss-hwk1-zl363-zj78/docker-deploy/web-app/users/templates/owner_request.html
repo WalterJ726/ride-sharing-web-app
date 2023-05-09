@@ -1,0 +1,17 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+  <main>
+    <head><h1>Request for a New Ride</h1></head>
+    <p>An email will be sent to you when someone accepts your order
+      or when your order has to be cancelled
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary mt-3" type="submit">Request</button>
+    </form>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'owner-home' %}'">Cancel</button><br>
+</main>
+{% endblock %}
+

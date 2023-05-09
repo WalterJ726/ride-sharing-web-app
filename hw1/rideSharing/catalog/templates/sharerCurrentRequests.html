@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="table-responsive container">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Arrival_time</th>
+          <th scope="col">total_passanger</th>
+          <th scope="col">vehicle_type</th>
+          <th scope="col">plate_nubmer</th>
+          <th scope="col">Shared People</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in currentRequest %}
+        <tr>
+            <td>{{order.id}}</td>
+            <td>{{order.destination}}</td>
+            <td>{{order.arrival_time}}</td>
+            <td>{{order.total_passanger}}</td>
+            <td>{{order.get_vehicle_type_display}}</td>
+            <td>{{order.plate_number}}</td>
+            <td>{{order.shared_people}}</td>
+            <td>
+            <a class="btn btn-danger btn-xs" href="/catalog/sharerShareableRequests/{{order.id}}/delete/">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% endblock %}

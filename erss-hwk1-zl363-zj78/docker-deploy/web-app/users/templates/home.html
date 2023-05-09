@@ -1,0 +1,31 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+<main class="px-3 row">
+  <div class="col-6">
+    <img src="/static/users/images/background.webp" class="img-fluid">
+  </div>
+  <div class="col-6">
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+        <h2>Welcome back {{user.username}}!</h2><br><br>
+        {% else %}
+        <h2 class="fs-1">Let's Ride!</h2><br><br>
+	{% endif %}
+
+	<p class="lead "> Safe, Convenient, Flexible</p><br>
+	
+	{% if user.is_authenticated %}
+	<a class="btn btn-outline-primary fs-5" href="{% url 'logout' %}">Log Out</a>
+	{% else %}
+        <div class="d-grid col-4 mx-auto">
+            <a class="btn btn-outline-primary fs-5" href="{% url 'login' %}">Log in</a>
+            <br>
+            <a class="btn btn-outline-primary fs-5" href="{% url 'register' %}">Sign up</a>   
+        </div>
+        {% endif %}
+    </div>
+  </div>
+</main>
+{% endblock %}

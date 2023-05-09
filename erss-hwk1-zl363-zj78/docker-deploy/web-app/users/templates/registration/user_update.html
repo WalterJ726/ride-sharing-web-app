@@ -1,0 +1,29 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+<main>
+  <div class="text-center mt-4">
+
+    <h1>Update Profile</h1>
+    <p>Update your password and/or email<br>
+      Password requirement remains the same
+    </p>
+    
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary mt-3" type="submit">Update</button>
+    </form>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'home' %}'">Cancel</button>
+  </div>
+</main>
+{% endblock %}
+

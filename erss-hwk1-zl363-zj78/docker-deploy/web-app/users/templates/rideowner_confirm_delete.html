@@ -1,0 +1,44 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+
+<main>
+  <head><h2>Are you sure you want to cancel the following ride?</h2></head>
+  <body>
+    <form method="POST">
+      {% csrf_token %}
+      <table class="table" border="1">
+	<thead>
+          <tr>
+            <th>Destination</th>
+            <th>Arrival Time</th>
+            <th>Total Passengers</th>
+	    <th>Sharable</th>
+	    <th>Number of Sharers</th>
+	    <th>Driver name</th>
+	    <th>Plate Number</th>
+	    <th>Status</th>
+          </tr>
+	</thead>
+
+	<tbody>
+          <tr>
+            <td>{{ object.dest_addr }}</td>
+            <td>{{ object.arrival | date:"m/d/Y P" }}</td>
+            <td>{{ object.num_passenger }}</td>
+	    <td>{{ object.sharable }}</td>
+	    <td>{{ object.num_sharer }}</td>
+	    <td>{{ object.driver_name }}</td>
+	    <td>{{ object.plate_num }}</td>
+	    <td>{{ object.status }}</td>
+          </tr>
+	</tbody>
+      </table>
+
+      <br>
+      <button class="btn btn-primary mt-3" type="submit">Yes</button>
+    </form>
+     <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'owner-home' %}';">No</button>
+  </body>
+</main>
+{% endblock %}

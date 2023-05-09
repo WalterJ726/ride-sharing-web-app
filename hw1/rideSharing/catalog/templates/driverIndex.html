@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="btn-group-vertical col-4 justify-content-center" role="group" aria-label="Vertical button group">
+        <a class="btn btn-primary mb-3" href="{% url 'driverUpdate' %}">Register as Driver</a>
+        <a class="btn btn-primary mb-3" href="{% url 'driverSearch' %}">Search for Order</a>
+        <a class="btn btn-primary mb-3" href="{% url 'driverOrders' %}">Manage Order</a>
+        <a class="btn btn-primary mb-3" href="{% url 'driverPassOrders' %}">Past Order</a>
+    </div>
+</div>
+
+
+
+{% endblock %}

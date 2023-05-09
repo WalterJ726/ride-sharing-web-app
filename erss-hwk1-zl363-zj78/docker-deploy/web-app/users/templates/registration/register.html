@@ -1,0 +1,16 @@
+{% extends 'general_basic.html' %}
+
+
+{% block content %}
+  <main class="justify-content-start">
+  <h1>Sign Up</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary mt-3" type="submit">Register</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'home' %}'">Cancel</button><br><br>
+    Have an account?
+    <a href="{% url 'login' %}">Sign In</a><br><br>
+  </form>
+</main>
+{% endblock %}

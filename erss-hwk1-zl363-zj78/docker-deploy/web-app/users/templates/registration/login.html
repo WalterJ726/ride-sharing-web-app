@@ -1,0 +1,17 @@
+{% extends 'general_basic.html' %}
+
+
+{% block content %}
+  <main>
+    <div class="text-center mt-4">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+          <button class="btn btn-primary mt-3" type="submit">Log In</button><br><br>
+          <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'home' %}'">Cancel</button><br><br>
+        Do not have account?
+        <a href="{% url 'register' %}">Sign up</a><br><br>
+      </form>
+    </div>
+  </main>
+{% endblock %}

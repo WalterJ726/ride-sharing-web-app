@@ -1,0 +1,16 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+  <main>
+    <head><h1>Search for Rides</h1></head>
+    <p>An email will be sent to you when your joined ride is accepted
+      or when your joined ride is cancelled
+    </p>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary mt-3" type="submit">Search</button>
+  </form>
+  <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'sharer-home' %}'">Cancel</button><br>
+</main>
+{% endblock %}

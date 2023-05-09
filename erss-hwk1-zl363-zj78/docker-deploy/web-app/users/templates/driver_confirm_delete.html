@@ -1,0 +1,42 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+
+<main>
+  <head><h2>Are you sure you want to unregister your driver status?</h2></head>
+  <body>
+    <p> Note: All your confirmed but incomplete orders will be automatically cancelled.<br>
+      If you intend to change your driver profile, you can go to your driver home -> 'Register/Update'
+      to update your info.
+    </p>
+    <form method="POST" action="{% url 'delete-driver' %}">
+      {% csrf_token %}
+      <table class="table" border="1">
+	<thead>
+          <tr>
+            <th>Vehicle Type</th>
+	    <th>Plate Number</th>
+	    <th>Max Passenger</th>
+	    <th>Special Request</th>
+          </tr>
+	</thead>
+
+	<tbody>
+	  {% for object in object_list %}
+          <tr>
+	    <td>{{ object.vehicle_type }}</td>
+	    <td>{{ object.plate_num }}</td>
+	    <td>{{ object.max_passengers }}</td>
+	    <td>{{ object.special_request }}</td>
+          </tr>
+	  {% endfor %}
+	</tbody>
+      </table>
+
+      <br>
+      <input class="btn btn-primary mt-3" type="submit" value="Yes">
+    </form>
+     <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-home' %}';">No</button>
+  </body>
+</main>
+{% endblock %}

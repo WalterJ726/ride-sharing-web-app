@@ -1,0 +1,27 @@
+{% extends 'general_basic.html' %}
+
+
+{% block content %}
+  <main>
+  <h1>Ride Owner</h1>
+    {% if user.is_authenticated %}
+    <h2>Welcome back {{user.username}}!<br></h2>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'request-ride' %}'">Request a New Ride</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'owner-edit' %}'">Manage Your Rides</button><br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'owner-past-rides' %}'">Past Rides</button><br><br>
+    {% else %}
+    <h2>Please log in to continue</h2>
+    {% endif %}
+
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'home' %}'">Go to Home</button><br><br>
+    
+    {% if user.is_authenticated %}
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+
+    {% else %}
+    <a href="{% url 'login' %}">Log in</a><br>
+    <a href="{% url 'register' %}">Sign up</a><br>
+    {% endif %}
+
+  </main>
+  {% endblock %}

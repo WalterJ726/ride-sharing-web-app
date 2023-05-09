@@ -1,0 +1,49 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+
+<main>
+  <head><h1>Current Rides</h1></head>
+  <body>    
+    <table class="table" border="1">
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Arrival Time</th>
+          <th>Total Passengers</th>
+	  <th>Sharable</th>
+	  <th>Number of Sharers</th>
+	  <th>Vehicle Type</th>
+	  <th>Special Request</th>
+	  <th>Driver name</th>
+	  <th>Plate Number</th>
+	  <th>Status</th>
+	  <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ride in object_list %}
+        <tr>
+          <td>{{ ride.dest_addr }}</td>
+          <td>{{ ride.arrival | date:"m/d/Y P" }}</td>
+          <td>{{ ride.num_passenger }}</td>
+	  <td>{{ ride.sharable }}</td>
+	  <td>{{ ride.num_sharer }}</td>
+	  <td>{{ ride.vehicle_type }}</td>
+	  <td>{{ ride.special_request }}</td>
+	  <td>{{ ride.driver_name }}</td>
+	  <td>{{ ride.plate_num }}</td>
+	  <td>{{ ride.status }}</td>
+	  <td><a href="{% url 'owner-update' ride.id %}">Edit</a>,
+	    <a href="{% url 'owner-cancel' ride.id %}">Cancel</a>
+	  </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'owner-home' %}'">Back</button><br><br>
+  </body>
+</main>
+{% endblock %}

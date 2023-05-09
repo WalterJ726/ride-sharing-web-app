@@ -1,0 +1,41 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+<main>
+  <head><h1>Available Rides</h1></head>
+  <body>
+    <p>Matched results based on your driver info and user requests</p>
+    <table class="table" border="1">
+      <thead>
+        <tr>
+          <th>Owner</th>
+          <th>Destination</th>
+          <th>Arrival Time</th>
+          <th>Total Passengers</th>
+	  <th>Sharable</th>
+	  <th>Number of Sharers</th>
+	  <th>Special Request</th>
+	  <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ride in object_list %}
+        <tr>
+          <td>{{ ride.username }}</td>
+          <td>{{ ride.dest_addr }}</td>
+          <td>{{ ride.arrival | date:"m/d/Y P" }}</td>
+          <td>{{ ride.num_passenger }}</td>
+	  <td>{{ ride.sharable }}</td>
+	  <td>{{ ride.num_sharer }}</td>
+	  <td>{{ ride.special_request }}</td>
+	  <td><a href="{% url 'driver-confirm' ride.id %}">Select</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br><br>
+    <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-home' %}'">Back</button><br><br>
+  </body>
+</main>
+{% endblock %}

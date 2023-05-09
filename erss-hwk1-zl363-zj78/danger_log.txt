@@ -1,0 +1,63 @@
+# USER INFO SECURITY
+Storing and validating user information has to be done securely. This implementation uses Django's built-in
+user authentication system that takes care of both authentication and authorization. Therefore, the security of user's
+information heavily relies on the Django's authentication system, which we believe is definitely sufficient for
+this project, and it is easy to use. If we were to implement this by ourselves, directly storing user's raw
+password is definitely insecure. Instead, we would salt the raw password for each user, hash it, and then store
+the hash in the database. Salting the password can prevent attacks using rainbow tables. Additionally, Django's
+authentication system imposes common restrictions on user's password, such as at least have 8 characters,
+cannot be too similar to the username, and more. Therefore, user's password will be much less trivial and
+is more robust in the face of dictionary attacks.
+However, one weakness in handling user information is when users update their passwords and emails. Emails are 
+allowed to be blank, that should not cause too much trouble, but password check is less robust comparing to
+the one used in creating an account. When updating passwords, it only checks whether the password is too short
+(<8 characters) and whether the password is the same as the username. Thus, the newly updated password can be
+less secure than the very initial one.
+
+
+# MODEL FIELD SECURITY
+When creating the models and specifing their fields, we used many built-in field options to regulate the
+form inputs. For instance, for CharFields, each one is explicitly specified a reasonably long maximum length
+such that it allows users to input their complete information and also prevents potential problems/attacks like
+buffer overflow. Similarly, we trust and heavily rely on the security of Django's field options, for instance,
+we believe they can properly handle SQL injection. We also set default values to the fields whenever appropriate.
+It reduces potential issues for inputting nothing, which could violate data integrity.
+
+
+# FORM INPUT SECURITY
+Forms are generated and regulated by using and extending Django's built-in forms. Moreover, since most of the times
+the forms are used to initialize a model instance, each form is prototyped based on the corresponding model. In
+this way, the restrictions specified in the models will automatically apply to the forms. Additionally, some
+restrictions are checked and applied by writing extra validator functions. They are applied to validate the form
+inputs before storing them to the database. However, it might be possible to have some corner cases that we
+did not cover and could cause problems, but we expect them to be few.
+
+
+# CSRF(Cross Site Request Forgery) Protection
+Since Django 4.0, CSRF middleware is automatically included within the project, and we also use it throughout the
+program. It has limitations, which are outlined in Django's official documentation:
+"Subdomains within a site will be able to set cookies on the client for the whole domain. By setting the cookie and
+using a corresponding token, subdomains will be able to circumvent the CSRF protection. The only way to avoid this
+is to ensure that subdomains are controlled by trusted users (or, are at least unable to set cookies)"
+
+
+# SERVICE RELIABILITY AND SITE AVAILABILITY
+The website is tested with path coverage (i.e., every path a user can go is tested), and all the functionalities
+are also tested. All the services require user login to be available. Raising 404 exception is widely deployed when
+data retrieval gives null or 'does not exist' responses. However, it is not guaranteed the website will still be
+robust under high demand and has large volume of data flow since we did not (and we hardly could) conduct tests
+at this scale.
+If there are exceptions raised, in some situations the page will clear the user inputs and redirect to itself or
+to the level above, and some other times will simply result in an error page or 404 Not Found page. But whichever
+situation it is, data integreity should still be maintained (i.e., existing data remains in consistent states)
+
+Worth noticing, a bug was found by the team in the testing phase. Some pages require an unique primary key(pk) value
+to be included in the url for determining which entity the page should deal with. The bug exploits this property
+by altering the pk index in the url when it exists so that users now can access some unauthorized pages. The bug
+was fixed by adding a check of identity to ensure the page is access by the correct user. To be more secure,
+a cryptographic hash could be appended to ensure the user can only access the desired page alone. In this way,
+even other pages that the user is authorized to access cannot be access improperly by permuting the pk values. 
+
+
+-------------------------------------------------------------------------------------------------------------------
+

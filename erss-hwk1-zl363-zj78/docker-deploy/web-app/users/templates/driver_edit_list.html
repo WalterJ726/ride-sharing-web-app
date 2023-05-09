@@ -1,0 +1,38 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+  <main>
+  <head><h1>Current Rides</h1></head>
+    <table class="table " border="1">
+      <thead>
+        <tr>
+          <th>Owner</th>
+          <th>Destination</th>
+          <th>Arrival Time</th>
+          <th>Total Passengers</th>
+	  <th>Sharable</th>
+	  <th>Number of Sharers</th>
+	  <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ride in object_list %}
+        <tr>
+          <td>{{ ride.username }}</td>
+          <td>{{ ride.dest_addr }}</td>
+          <td>{{ ride.arrival | date:"m/d/Y P" }}</td>
+          <td>{{ ride.num_passenger }}</td>
+	  <td>{{ ride.sharable }}</td>
+	  <td>{{ ride.num_sharer }}</td>
+	  <td><a href="{% url 'driver-complete' ride.id %}">Complete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br><br>
+    <button  class="btn btn-primary mt-3" onclick="window.location.href='{% url 'driver-home' %}'">Back</button><br><br>
+  </main>
+  {% endblock %}
+  
+

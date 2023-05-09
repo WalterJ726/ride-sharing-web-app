@@ -1,0 +1,47 @@
+{% extends 'general_basic.html' %}
+
+{% block content %}
+
+<main>
+  <head><h1>Current Rides</h1></head>
+  <p>If you would like to change the number of passengers, please cancel and then re-join</p>
+  <body>
+    <table class="table" border="1">
+      <thead>
+        <tr>
+	  <th>Owner</th>
+          <th>Destination</th>
+          <th>Arrival Time</th>
+          <th>Total Passengers</th>
+	  <th>Number of Sharers</th>
+	  <th>Vehicle Type</th>
+	  <th>Driver name</th>
+	  <th>Plate Number</th>
+	  <th>Status</th>
+	  <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ride in object_list %}
+        <tr>
+	  <td>{{ ride.username }}</td>
+          <td>{{ ride.dest_addr }}</td>
+          <td>{{ ride.arrival | date:"m/d/Y P" }}</td>
+          <td>{{ ride.num_passenger }}</td>
+	  <td>{{ ride.num_sharer }}</td>
+	  <td>{{ ride.vehicle_type }}</td>
+	  <td>{{ ride.driver_name }}</td>
+	  <td>{{ ride.plate_num }}</td>
+	  <td>{{ ride.status }}</td>
+	  <td><a href="{% url 'sharer-cancel' ride.id %}">Cancel</a>
+	  </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+   <br><br>
+   <button class="btn btn-primary mt-3" onclick="window.location.href='{% url 'sharer-home' %}'">Back</button><br>
+  </body>
+</main>
+{% endblock %}
